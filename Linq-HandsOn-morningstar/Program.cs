@@ -13,13 +13,29 @@ namespace Linq_HandsOn_morningstar
             var querySyntax = from obj in list
                               where Convert.ToInt32(obj) > 5
                               select obj;
-            //Console.WriteLine()
-            foreach(int num in querySyntax)
+            Console.WriteLine("---------------------------");
+            Console.WriteLine(" Query Syntax");
+            Console.WriteLine("---------------------------");
+            foreach (int num in querySyntax)
             {
                 Console.WriteLine(num);
             }
-            Console.WriteLine("Hello World!");
-            Console.Read();     
+            Console.WriteLine("---------------------------");
+            Console.WriteLine(" Method Syntax");
+            Console.WriteLine("---------------------------");
+            var methodSyntax = list.Where(obj => obj > 2);
+            foreach (int num in methodSyntax)
+            {
+                Console.WriteLine(num);
+            }
+            Console.WriteLine("---------------------------");
+            Console.WriteLine(" Mixed Syntax");
+            Console.WriteLine("---------------------------");
+            var mixedSyntax=(from obj in list
+                             select obj).Max();
+            Console.WriteLine("Max is = "+mixedSyntax);
+
+
         }
     }
 }
