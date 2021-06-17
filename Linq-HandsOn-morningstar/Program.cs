@@ -40,11 +40,12 @@ namespace Linq_HandsOn_morningstar
             #region IEnumerableExample
             List<int> list2 = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             IEnumerable<int> querySyntax2 = from obj in list
-                              where Convert.ToInt32(obj) > 5
-                              select obj;
+                                            where Convert.ToInt32(obj) > 5
+                                            select obj;
             #endregion
 
             #region ProjectionOperationInLINQ
+            Console.WriteLine("===============================================");
             List<Employee> employee = new List<Employee>()
             {
               new Employee(){Id = 1, Name = "Mayank", EmailId="mayank@gmail.com" },
@@ -56,17 +57,53 @@ namespace Linq_HandsOn_morningstar
             var basicQuery = (from emp in employee
                               select emp).ToList();
 
-            var basicMethod =  employee
+            var basicMethod = employee
                              .ToList();
 
             var basicPropQuery = (from emp in employee
-                              select emp.Id).ToList();
+                                  select emp.Id).ToList();
 
-            var basicPropMethod =employee.Select(
-                employee=>employee.Id).ToList();
+            var basicPropMethod = employee.Select(
+                employee => employee.Id).ToList();
 
             var basicPropMethod2 = employee.Select(
-                employee => employee.Id+1).ToList();
+                employee => employee.Id + 1).ToList();
+
+            var selectQuery = (from emp in employee
+                               select new Student()
+                               {
+                                   SEmail = emp.EmailId,
+                                   SId = emp.Id,
+                                   SName = emp.Name
+                               }).ToList();
+            Console.WriteLine("select query result");
+            foreach (var item in selectQuery)
+            {
+                Console.WriteLine($"Id = {item.SId} Name = {item.SName} Email = {item.SEmail}");
+            }
+
+            var selectMethod = employee.Select(emp => new Student()
+            {
+                SEmail = emp.EmailId,
+                SId = emp.Id,
+                SName = emp.Name
+            });
+
+            //Anonymous type to create our own property 
+            var anonymousTypeToCreateCustomType = (from emp in employee
+                                                   select new
+                                                   {
+                                                       customEmail = emp.EmailId,
+                                                       customEmailId = emp.Id,
+                                                       customEmailName = emp.Name
+                                                   }).ToList();
+
+            //select data using index
+            var indexQuery = employee.Select((emp, index) =>
+              new { Index = index, FullName = emp.Name }).ToList();
+        }
+        
+
 
 
             #endregion
